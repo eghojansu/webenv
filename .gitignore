@@ -1,5 +1,6 @@
 .env
 compose.*.yml
+compose.*.yaml
 
 # Ms temp
 ~$*.doc*
