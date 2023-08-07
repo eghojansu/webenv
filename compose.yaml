@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+    mysql:
+        image: mariadb:10.6
+        container_name: mysql-container
+        restart: unless-stopped
+        expose:
+            - 3306
+        ports:
+            - "127.0.0.1:${MYSQL_PORT}:3306"
+        volumes:
+            - ${ENV_DATA}/mysql:/var/lib/mysql
+            - ${ENV_DATA}/mysql_storage:/home/storage
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_RESTORE_DATABASES=${MYSQL_RESTORE_DATABASES}
+        networks:
+            - ekok-network
+
+    php82:
+        build:
+            context: ./php/8.2
+        container_name: php82-container
+        restart: unless-stopped
+        volumes:
+            - ${ENV_DATA}/apps/php82:/home/www-data
+        networks:
+            - ekok-network
+
+networks:
+    ekok-network:

@@ -1,0 +1,4 @@
+services:
+    php82:
+        ports:
+            - "8200:8000"
